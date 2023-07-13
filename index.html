@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>My Widget</title>
+  <style>
+    body {
+      font-family: "futura", sans-serif;
+      letter-spacing: 1px
+      background-color: white;
+    }
+
+    .grey-box {
+      background-color: #e6e6e6;
+      padding: 1.5em;
+      border-radius: 15px;
+      margin: 1em auto;
+      max-width: 400px;
+    }
+
+    .widget {
+      position: relative;
+      border: none;
+    }
+
+    .widget-header {
+      position: relative;
+      background-color: #282a2b;
+      border-radius: 15px 15px 0 0;
+      padding: 1.5em;
+      margin: -1.5em -1.5em 1.5em -1.5em;
+    }
+
+    .widget-date {
+      position: absolute;
+      top: 0;
+      left: 1em;
+      font-size: 1em;
+      font-weight: bold;
+      color: white;
+      padding: 0.9em 0.5em;
+      border-radius: 5px;
+    }
+
+    .widget-time {
+      position: absolute;
+      top: 0;
+      right: 1em;
+      font-size: 1em;
+      font-weight: bold;
+      color: white;
+      padding: 0.9em 0.5em;
+      border-radius: 5px;
+    }
+
+    .widget-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1em;
+    }
+
+    .widget-button {
+      width: 6em;
+      height: 10em;
+      background-color: white;
+      border-radius: 10px;
+      padding: 1em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-right: 1.3em;
+      cursor: pointer;
+    }
+
+    .widget-button:last-child {
+      margin-right: 0;
+    }
+
+    .widget-button img {
+      max-width: 90%;
+      max-height: 60%;
+    }
+
+    .widget-button-text {
+      margin-top: 0.5em;
+      font-size: 0.8em;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+    }
+.widget-button:hover,
+.widget-button:hover .widget-button-text,
+.widget-button.selected {
+  background-color: #b7aeae;
+  cursor: pointer;
+}
+
+.widget-button:hover .widget-button-text,
+.widget-button.selected .widget-button-text {
+  color: white;
+}
+
+.widget-button:hover img,
+.widget-button.selected img,
+.widget-button:hover img.selected-img {
+  filter: brightness(0) saturate(100%) invert(100%);
+}
+
+    .selected-img {
+      filter: brightness(0) saturate(100%) invert(100%);
+    }
+
+    .widget-button.selected img,
+    .widget-button.selected img.selected-img {
+      filter: brightness(0) saturate(100%) invert(100%);
+    }
+  </style>
+</head>
+<body>
+  <div class="grey-box">
+    <div class="widget-header">
+      <div class="widget-date"></div>
+      <div class="widget-time"></div>
+    </div>
+    <div class="widget">
+      <div class="widget-buttons">
+        <div class="widget-button" onclick="toggleSelected(this)">
+          <img src="https://i.imgur.com/RdTBk8Q.png" alt="Button 1">
+          <div class="widget-button-text">WORKING FROM THE OFFICE</div>
+        </div>
+        <div class="widget-button" onclick="toggleSelected(this)">
+          <img src="https://i.imgur.com/1oNmiAm.png" alt="Button 2">
+          <div class="widget-button-text">WORKING FROM HOME</div>
+        </div>
+        <div class="widget-button" onclick="toggleSelected(this)">
+          <img src="https://i.imgur.com/MrDgd3j.png" alt="Button 3">
+          <div class="widget-button-text">RELAXING</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    function toggleSelected(button) {
+      if (button.classList.contains("selected")) {
+        button.classList.remove("selected");
+        button.querySelector("img").classList.remove("selected-img"); // Remove the "selected-img" class from the image
+      } else {
+        var buttons = document.querySelectorAll(".widget-button");
+
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].classList.remove("selected");
+          buttons[i].querySelector("img").classList.remove("selected-img");        }
+
+        button.classList.add("selected");
+        button.querySelector("img").classList.add("selected-img"); // Add the "selected-img" class to the image
+      }
+    }
+
+    // Update date and time every second
+function updateTime() {
+  var now = new Date();
+  var dateElement = document.querySelector(".widget-date");
+  var timeElement = document.querySelector(".widget-time");
+  var dateOptions = { month: 'long', day: 'numeric' }; // set month to long and day to numeric
+  var timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+
+  dateElement.textContent = now.toLocaleDateString('en-US', dateOptions);
+  timeElement.textContent = now.toLocaleTimeString('en-US', timeOptions);
+
+  setTimeout(updateTime, 1000);
+}
+
+    updateTime();
+  </script>
+</body>
+</html>
